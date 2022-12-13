@@ -44,7 +44,8 @@ class FollowViewSet(mixins.CreateModelMixin,
     search_fields = ('user__username', 'following__username')
 
     def get_queryset(self):
-        return Follow.objects.filter(following=self.request.user)
+        user = self.request.user
+        return user.following.all()
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
